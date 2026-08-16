@@ -1,0 +1,21 @@
+{
+  "name": "dsh-plugin-md-preview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH web GUI 客户端插件：侧边栏 MD 预览窗口（浏览目录 / 渲染 Markdown / 查看源码）",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ]
+    }
+  }
+}
