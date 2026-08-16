@@ -4,13 +4,26 @@
   "private": true,
   "type": "module",
   "description": "DSH web GUI 客户端插件：侧边栏 MD 预览窗口（浏览目录 / 渲染 Markdown / 查看源码）",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anitman/dsh-plugin-md-preview.git"
+  },
   "main": "index.js",
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml"
+  ],
   "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "platform": "web",
       "inject": [

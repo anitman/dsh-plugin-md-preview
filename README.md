@@ -29,11 +29,38 @@ DSH web GUI 的小客户端插件：侧栏底部多一个「MD 预览」按钮�
 
 | 文件 | 作用 |
 | --- | --- |
-| `package.json` | 包描述 + `dsh.client` 声明（浏览器半边发现机制） |
+| `package.json` | 包描述 + `dsh.bundle`（安装层声明）+ `dsh.client`（浏览器半边发现机制） |
+| `cordis.patch.yml` | 组合包补丁层：安装时由 `dsh plugin add` 激活，注册 `md-preview` Loader 行 |
 | `index.js` | 宿主半边（node）：`/md-preview/read`、`/md-preview/list`、`/md-preview/write` 路由 |
 | `client.js` | 浏览器半边（classic script bundle，无需构建） |
 
-## 安装（web profile）
+## 安装（web profile，推荐）
+
+本包声明了 `dsh.bundle`，按官方机制一条命令安装（自动完成链接、依赖与补丁层注册）：
+
+```sh
+# 从本仓库 clone 出的本地目录安装（在 clone 目录内执行）
+dsh plugin --profile web add .
+
+# 或直接从 GitHub 安装（锁定 sha 可防后续推送改动代码）
+dsh plugin --profile web add github:anitman/dsh-plugin-md-preview
+```
+
+纯 JS 包无构建脚本，git 安装**不需要** `allowBuilds` 授权。
+
+**重启 dsh 进程**后（新增 Loader 条目只在启动时扫描；会话会自动恢复），GUI 左侧栏底部（设置按钮上方）会出现一个文档图标按钮。
+
+### 卸载
+
+```sh
+dsh plugin --profile web remove dsh-plugin-md-preview
+```
+
+同时移除依赖和补丁层，重启 dsh 生效。
+
+## 安装（手动 fallback）
+
+不方便用 `dsh plugin` 时（如无 CLI 环境），手工完成等价步骤：
 
 1. 在 `~/.dsh/profiles/web/node_modules/` 下创建指向本目录的符号链接
    `dsh-plugin-md-preview`（失败则直接拷贝本目录）；
@@ -47,10 +74,10 @@ DSH web GUI 的小客户端插件：侧栏底部多一个「MD 预览」按钮�
    ```
 4. **重启 dsh 进程**（新增 Loader 条目只在启动时扫描；会话会自动恢复）。
 
-重启后在 GUI 左侧栏底部（设置按钮上方）会出现一个文档图标按钮。
-
 ## 更新
 
 - 只改 `client.js`：无需重启，client-HMR 会自动热重载插件（需要宿主侧的 watch 链生效；否则刷新页面）；
 - 改 `index.js`（宿主半边）：必须重启 dsh；
+- `dsh plugin add .` 链接的本机 clone：`git pull` 后重启 dsh 即可；
+- `github:` 安装的：重新执行 `dsh plugin --profile web add github:anitman/dsh-plugin-md-preview#<sha>` 升级；
 - 若 node_modules 里是拷贝而非符号链接：修改后需重新拷贝（或改回符号链接）。

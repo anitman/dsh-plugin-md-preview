@@ -1,0 +1,3 @@
+- insert:
+    - id: md-preview
+      name: dsh-plugin-md-preview
