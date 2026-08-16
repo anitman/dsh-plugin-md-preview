@@ -60,8 +60,10 @@ npx @deepseek-ai/dsh web
 Install this plugin into a profile (the ecosystem convention):
 
 ```sh
-dsh plugin --profile web add "github:anitman/dsh-plugin-md-preview#ref"
+dsh plugin --profile web add "github:anitman/dsh-plugin-md-preview#main"
 ```
+
+The `#<ref>` suffix selects a branch, tag, or commit: `#main` follows the default branch; pin `#<sha>` or a release tag to make the installed content immutable; omit it to track the repo's default branch.
 
 `dsh plugin` forwards package operations to pnpm, so npm, Git/GitHub, local path, `file:` and `link:` package specs are all supported — e.g. from a local clone:
 
@@ -149,8 +151,10 @@ npx @deepseek-ai/dsh web
 把本插件装进 profile（生态标准写法）：
 
 ```sh
-dsh plugin --profile web add "github:anitman/dsh-plugin-md-preview#ref"
+dsh plugin --profile web add "github:anitman/dsh-plugin-md-preview#main"
 ```
+
+`#<ref>` 后缀可选分支、tag 或 commit：`#main` 跟随默认分支；锁 `#<sha>` 或 release tag 可让安装内容不可变；省略则跟随仓库默认分支。
 
 `dsh plugin` 把包操作转发给 pnpm，因此 npm、Git/GitHub、本地路径、`file:` 与 `link:` 包规范都支持——例如从本地 clone 安装：
 
